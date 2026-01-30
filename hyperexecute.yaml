@@ -5,10 +5,10 @@ autosplit: true
 concurrency: 2
 
 framework:
-  name: playwright
+  name: selenium
 
 pre:
   - npm install
 
 test:
-  - npx playwright test
+  - npm test
