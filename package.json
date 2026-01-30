@@ -1,11 +1,12 @@
 {
-  "name": "amazon-playwright-tests",
+  "name": "amazon-selenium-tests",
   "version": "1.0.0",
-  "description": "Amazon automation tests using Playwright",
+  "description": "Amazon automation tests using Selenium JavaScript",
   "scripts": {
-    "test": "playwright test"
+    "test": "mocha tests --timeout 60000"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.41.0"
+  "dependencies": {
+    "selenium-webdriver": "^4.16.0",
+    "chromedriver": "^116.0.5845.96"
   }
 }
