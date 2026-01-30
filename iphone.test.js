@@ -1,19 +1,33 @@
-const { test } = require('@playwright/test');
+const { Builder, By, until } = require('../selenium.config');
+const assert = require('assert');
 
-test('Search iPhone and print price', async ({ page }) => {
-  await page.goto('https://www.amazon.com');
+describe('Amazon iPhone Test', function() {
+  this.timeout(60000);
+  let driver;
 
-  await page.fill('#twotabsearchtextbox', 'iPhone');
-  await page.press('#twotabsearchtextbox', 'Enter');
+  before(async () => {
+    driver = await new Builder().forBrowser('chrome').build();
+  });
 
-  await page.waitForSelector('[data-component-type="s-search-result"]');
-  await page.click('[data-component-type="s-search-result"] h2 a');
+  after(async () => {
+    await driver.quit();
+  });
 
-  await page.waitForSelector('#add-to-cart-button');
-  await page.click('#add-to-cart-button');
+  it('Search iPhone, add to cart, and print price', async () => {
+    await driver.get('https://www.amazon.com');
 
-  const priceWhole = await page.locator('.a-price-whole').first().textContent();
-  const priceFraction = await page.locator('.a-price-fraction').first().textContent();
+    await driver.findElement(By.id('twotabsearchtextbox')).sendKeys('iPhone');
+    await driver.findElement(By.id('twotabsearchtextbox')).submit();
 
-  console.log(`iPhone Price: $${priceWhole}.${priceFraction}`);
+    await driver.wait(until.elementLocated(By.css('[data-component-type="s-search-result"] h2 a')), 10000);
+    await driver.findElement(By.css('[data-component-type="s-search-result"] h2 a')).click();
+
+    await driver.wait(until.elementLocated(By.id('add-to-cart-button')), 10000);
+    await driver.findElement(By.id('add-to-cart-button')).click();
+
+    const priceWhole = await driver.findElement(By.css('.a-price-whole')).getText();
+    const priceFraction = await driver.findElement(By.css('.a-price-fraction')).getText();
+
+    console.log(`iPhone Price: $${priceWhole}.${priceFraction}`);
+  });
 });
