@@ -1,6 +1,7 @@
 {
   "name": "amazon-playwright-tests",
   "version": "1.0.0",
+  "description": "Amazon automation tests using Playwright",
   "scripts": {
     "test": "playwright test"
   },

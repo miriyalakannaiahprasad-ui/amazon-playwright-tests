@@ -1,0 +1,14 @@
+version: 0.1
+runson: linux
+
+autosplit: true
+concurrency: 2
+
+framework:
+  name: playwright
+
+pre:
+  - npm install
+
+test:
+  - npx playwright test
